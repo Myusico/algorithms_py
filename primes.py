@@ -53,7 +53,27 @@ def is_coprime(n, factors):
     return True
 
 
+def phi(n):
+    """Euler's totient function"""
+    result = n
+    if n % 2 == 0:
+        while n % 2 == 0:
+            n //= 2
+        result -= result // 2
+    p = 3
+    while p * p <= n:
+        if n % p == 0:
+            while n % p == 0:
+                n //= p
+            result -= result // p
+        p += 2
+    if n > 1:
+        result -= result // n
+    return result
+
+
 def phi_with_primes(n, primes):
+    """Euler's totient function with pre-computed primes"""
     result = n
     for p in primes:
         if p * p > n:
@@ -62,24 +82,6 @@ def phi_with_primes(n, primes):
             while n % p == 0:
                 n //= p
             result -= result // p
-    if n > 1:
-        result -= result // n
-    return result
-
-
-def phi(n):
-    result = n
-    if n % 2 == 0:
-            while n % 2 == 0:
-                n //= 2
-            result -= result // 2
-    p = 3
-    while p * p <= n:
-        if n % p == 0:
-            while n % p == 0:
-                n //= p
-            result -= result // p
-        p += 2
     if n > 1:
         result -= result // n
     return result
@@ -99,7 +101,7 @@ def extended_euclidean(a, b):
     t = 0
     u = 0
     v = 1
-    #pre-condition: a=sA+tB and b=uA+vB
+    # pre-condition: a=sA+tB and b=uA+vB
     while b != 0:
         q = a//b
         r = a % b
@@ -111,55 +113,5 @@ def extended_euclidean(a, b):
         t = v
         u = new_u
         v = new_v
-    #post_condition: gcd(A,B)=a=sA+tB
+    # post_condition: gcd(A,B)=a=sA+tB
     return a, s, t
-
-
-def main():
-    print(extended_euclidean(867, 159))
-
-    # t1 = time.time()
-    # primes = sieve_primes(999999)
-    # t2 = time.time()
-    # print("%.10f" % (t2 - t1))
-
-    #sum = 0
-    #t1 = time.time()
-    #for i in range(99999,999999):
-    #    sum = (sum + phi(i)) % 29167
-    #print(sum)
-    #t2 = time.time()
-    #print("%.10f" % (t2 - t1))
-    #sum = 0
-    #t1 = time.time()
-    #for i in range(99999,999999):
-    #    sum = (sum + phi_with_primes(i,primes)) % 29167
-    #print(sum)
-    #t2 = time.time()
-    #print("%.10f" % (t2 - t1))
-
-    #counter1 = 0
-    #counter2 = 0
-    #factors = factorize(999998,primes)
-    #print(factors)
-    #t1 = time.time()
-    #for i in range(1,999998):
-    #    if is_coprime(i,factors):
-    #        counter1+=1
-    #        coprimes1.append(i)
-    #print(counter1)
-    #t2 = time.time()
-    #print("%.10f" % (t2 - t1))
-    #t1 = time.time()
-    #for i in range(1,999998):
-    #    if gcd(i,999998) == 1:
-    #        counter2+=1
-    #        coprimes2.append(i)
-    #print(counter2)
-    #t2 = time.time()
-    #print("%.10f" % (t2 - t1))
-    #print(phi_with_primes(999998,primes))
-
-
-if __name__ == "__main__":
-    main()

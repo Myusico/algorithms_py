@@ -1,6 +1,4 @@
-import time
-
-def binary_search(list,min,max,value):
+def binary_search(list, min, max, value):
     mid = (min + max) // 2
     while max - min > 1:
         if value > list[mid]:
@@ -12,8 +10,3 @@ def binary_search(list,min,max,value):
         else:
             return mid
     return mid
-
-def main():
-    return
-
-if __name__ == "__main__":main()
